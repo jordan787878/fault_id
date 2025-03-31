@@ -32,8 +32,8 @@ set(groot, 'DefaultFigureColor', 'w');  % White background
 
 % Set default axes properties.
 set(groot, 'DefaultAxesFontName', 'Times New Roman');
-set(groot, 'DefaultAxesFontSize', 20);
-set(groot, 'DefaultAxesLineWidth', 1.5);
+set(groot, 'DefaultAxesFontSize', 25);
+set(groot, 'DefaultAxesLineWidth', 2.5);
 set(groot, 'DefaultAxesTickDir', 'out');
 set(groot, 'DefaultAxesBox', 'on');
 
@@ -43,11 +43,11 @@ set(groot, 'DefaultLineMarkerSize', 8);
 
 % Set default text properties.
 set(groot, 'DefaultTextFontName', 'Times New Roman');
-set(groot, 'DefaultTextFontSize', 20);
+set(groot, 'DefaultTextFontSize', 24);
 set(groot, 'DefaultTextFontWeight', 'bold');  % Make text bold, affecting sgtitle
 
 % Set default legend properties.
-set(groot, 'DefaultLegendFontSize', 28);
+set(groot, 'DefaultLegendFontSize', 24);
 
 % Set a default color order for distinct plot colors.
 set(groot, 'DefaultAxesColorOrder', [0, 0.4470, 0.7410;

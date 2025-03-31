@@ -18,60 +18,69 @@ function plot_dataset1b1()
     
     % figure(1) control compare
     figure(1)
+    set(gcf, 'Units', 'inches', 'Position', [0, 0, 8, 8]); % [left, bottom, width, height]
     color_blue  = [0 0.4470 0.7410];    % MATLAB default blue
-    color_red = [0.8500 0.3250 0.0980]; % MATLAB default red
+    color_red = [0.8500 0.3250 0.0980];   % MATLAB default red
     color_green = [0, 0.5, 0];
     colorList = [color_blue; color_red; color_green];
     global_min = min([pas_outputs.u_hist(:); act_outputs.u_hist(:)]);
     global_max = max([pas_outputs.u_hist(:); act_outputs.u_hist(:)]);
+    plot_end = 600;
+    
+    sub_handles = gobjects(3,1); % Preallocate for subplot handles
     for i = 1:3
-        subplot(3,1,i)
-        plot(act_outputs.t_hist, act_outputs.u_hist(i,:), 'LineStyle', '--', Color=colorList(i,:)); hold on;
-        plot(pas_outputs.t_hist, pas_outputs.u_hist(i,:), 'Color', colorList(i,:)); hold on;
+        sub_handles(i) = subplot(3,1,i);
+        plot(act_outputs.t_hist(1:plot_end), act_outputs.u_hist(i,1:plot_end), 'LineStyle', ':', 'Color', colorList(i,:), LineWidth=3); hold on;
+        plot(pas_outputs.t_hist(1:plot_end), pas_outputs.u_hist(i,1:plot_end), 'Color', colorList(i,:), LineWidth=3); hold on;
         
-        ylabel("u"+num2str(i))
-        % xline(act_outputs.k_end + act_outputs.t_hist(1), 'Color', 'k');
-        legend('Active','Passive',Location="southeast")
-        title("Control Channel "+num2str(i))
+        ylabel(sprintf('$u_{%d}$', i), 'Interpreter', 'latex')
+        if i == 1
+            legend('Active','Passive','Location',"northeast",fontsize=25)
+        end
         ylim([global_min, global_max])
+        grid on;
     end
-
-    xlabel("k, time step")
+    
+    linkaxes(sub_handles, 'x'); % Share the x-axis across all subplots
+    xlabel("k, time")
     
     figure(2)
+    set(gcf, 'Units', 'inches', 'Position', [0, 0, 8, 8]); % [left, bottom, width, height]
     t_min = act_outputs.t_hist(1); t_max = t_min + pas_outputs.k_end;
     subplot(2,1,1)
     plot_belief_traj(act_outputs)
     xlim([t_min, t_max])
     legend('show',Location="northwest");
-    xlabel("k, time step")
+    xlabel("k, time")
     ylabel("belief")
-    title("Active Hypothesis Belief Trajectory")
+    title("Active FID Belief Trajectory")
+    grid on;
     subplot(2,1,2)
     plot_belief_traj(pas_outputs)
     xlim([t_min, t_max])
     legend('show',Location="northwest");
-    xlabel("k, time step")
+    xlabel("k, time")
     ylabel("belief")
-    title("Passive Hypothesis Belief Trajectory")
-
-    figure(3)
-    gap = 100;
-    h_act = visualizeAttitude(act_outputs.bn_hist, act_outputs.rlmo_hist, gap, 3, 0.5, ...
-                               {'Active Body X','Active Body Y','Active Body Z'}, '--');
-    hold on
-    h_pas = visualizeAttitude(pas_outputs.bn_hist, pas_outputs.rlmo_hist, gap, 1, 3.5, ...
-                               {'Passive Body X','Passive Body Y','Passive Body Z'}, ':');
-    
-    % Now combine handles. For example, if you want one legend per dataset:
-    legend([h_act(1), h_pas(1)], {'Active Attitude Body X', 'Passive Attitude Body X'}, 'Location', 'best');
-    view(25, 11)
-
-    % Ensure that the figure is not cropped when saving.
-    set(gcf, 'PaperPositionMode', 'auto');
-    
-    % Save the figure as a PDF with 300 dpi.
-    print(gcf, 'figs/3datt_traj.pdf', '-dpdf', '-r300');
+    title("Passive FID Belief Trajectory")
+    grid on;
+    % 
+    % figure(3)
+    % gap = 100;
+    % h_act = visualizeAttitude(act_outputs.bn_hist, act_outputs.rlmo_hist, gap, 3, 0.5, ...
+    %                            {'Active Body X','Active Body Y','Active Body Z'}, '--');
+    % hold on
+    % h_pas = visualizeAttitude(pas_outputs.bn_hist, pas_outputs.rlmo_hist, gap, 1, 3.5, ...
+    %                            {'Passive Body X','Passive Body Y','Passive Body Z'}, ':');
+    % 
+    % % Now combine handles. For example, if you want one legend per dataset:
+    % legend([h_act(1), h_pas(1)], {'Active Attitude Body X', 'Passive Attitude Body X'}, 'Location', 'best');
+    % view(25, 11)
+    % 
+    % % Ensure that the figure is not cropped when saving.
+    % set(gcf, 'PaperPositionMode', 'auto');
+    % 
+    % % Save the figure as a PDF with 300 dpi.
+    % print(gcf, 'figs/3datt_traj.pdf', '-dpdf', '-r300');
 
 end
 

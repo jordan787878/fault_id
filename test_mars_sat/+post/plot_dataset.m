@@ -7,17 +7,17 @@ post.setPublicationDefaults
     %                   'data/dataset2', or 'data/dataset3'
     
     % Plot for 'fail_percent'
-    plot_dataset_modular(datasetFolder, 'fail_percent', 'Fail Percentage %', 'Fail Percentage vs Moving Window & (Noise Level)');
-    set(gcf, 'PaperUnits', 'inches');
-    set(gcf, 'PaperPosition', [0 0 11 8]);  % Adjust dimensions as needed.
-    set(gcf, 'PaperSize', [11 8]);         % Match this to PaperPosition.
-    print(gcf, 'figs/dataset1b_failpercent.pdf', '-dpdf', '-r300');
+    % plot_dataset_modular(datasetFolder, 'fail_percent', 'Fail Rate %', 'Fail Rate vs Moving Window & (Noise Level)');
+    % set(gcf, 'PaperUnits', 'inches');
+    % set(gcf, 'PaperPosition', [0 0 11 9]);  % Adjust dimensions as needed.
+    % set(gcf, 'PaperSize', [11 9]);         % Match this to PaperPosition.
+    % print(gcf, 'figs/dataset1b_failpercent.pdf', '-dpdf', '-r300');
     
     % Plot for 'success_id_time_for_known_fault'
-    plot_dataset_modular(datasetFolder, 'success_id_time_for_known_fault', 'Average ID Time Duration', 'Average ID Time Duration vs Moving Window & (Noise Level)');
+    plot_dataset_modular(datasetFolder, 'success_id_time_for_known_fault', 'Average ID Time', 'ID Time vs Moving Window & (Noise Level)');
     set(gcf, 'PaperUnits', 'inches');
-    set(gcf, 'PaperPosition', [0 0 11 8]);  % Adjust dimensions as needed.
-    set(gcf, 'PaperSize', [11 8]);         % Match this to PaperPosition.
+    set(gcf, 'PaperPosition', [0 0 11 9]);  % Adjust dimensions as needed.
+    set(gcf, 'PaperSize', [11 9]);         % Match this to PaperPosition.
     print(gcf, 'figs/dataset1b_idtime.pdf', '-dpdf', '-r300');
 end
 
@@ -160,41 +160,44 @@ function plot_dataset_modular(datasetFolder, valueField, ylabelStr, titleStr)
     plot(N_vals, active_val_mid, '--s', 'Color', color_active, 'LineWidth', 1.0, 'MarkerSize', 5);
     plot(N_vals, active_val_hig, '--^', 'Color', color_active, 'LineWidth', 1.0, 'MarkerSize', 5);
 
-    % [Comparison]
-    % dataset1c
-    data_cp1 = "dataset1c";
-    for i = 1:N_data
-        N = N_vals(i);
-        FileName = sprintf('data_act_win%d.mat', N);
-        S = load(fullfile("data/"+data_cp1+"/rlevel_hig", FileName));
-        fn = fieldnames(S);
-        data = S.(fn{1});
-        val_hig(i) = data.sim.(metaField).(valueField);
-
-        S = load(fullfile("data/"+data_cp1+"/rlevel_mid", FileName));
-        fn = fieldnames(S);
-        data = S.(fn{1});
-        val_mid(i) = data.sim.(metaField).(valueField);
-
-        S = load(fullfile("data/"+data_cp1+"/rlevel_low", FileName));
-        fn = fieldnames(S);
-        data = S.(fn{1});
-        val_low(i) = data.sim.(metaField).(valueField);
-    end
-    plot(N_vals, val_low, '--o', 'Color', color_cp1, 'LineWidth', 1.5, 'MarkerSize', 5);
-    plot(N_vals, val_mid, '--s', 'Color', color_cp1, 'LineWidth', 1.5, 'MarkerSize', 5);
-    plot(N_vals, val_hig, '--^', 'Color', color_cp1, 'LineWidth', 1.5, 'MarkerSize', 5);
-    fill([N_vals, fliplr(N_vals)], [val_hig, fliplr(val_low)], ...
-    color_cp1, 'FaceAlpha', 0.3, 'EdgeColor', 'none', 'HandleVisibility', 'off');
+    % % [Comparison]
+    % % dataset1c
+    % data_cp1 = "dataset1c";
+    % for i = 1:N_data
+    %     N = N_vals(i);
+    %     FileName = sprintf('data_act_win%d.mat', N);
+    %     S = load(fullfile("data/"+data_cp1+"/rlevel_hig", FileName));
+    %     fn = fieldnames(S);
+    %     data = S.(fn{1});
+    %     val_hig(i) = data.sim.(metaField).(valueField);
+    % 
+    %     S = load(fullfile("data/"+data_cp1+"/rlevel_mid", FileName));
+    %     fn = fieldnames(S);
+    %     data = S.(fn{1});
+    %     val_mid(i) = data.sim.(metaField).(valueField);
+    % 
+    %     S = load(fullfile("data/"+data_cp1+"/rlevel_low", FileName));
+    %     fn = fieldnames(S);
+    %     data = S.(fn{1});
+    %     val_low(i) = data.sim.(metaField).(valueField);
+    % end
+    % plot(N_vals, val_low, '--o', 'Color', color_cp1, 'LineWidth', 1.5, 'MarkerSize', 5);
+    % plot(N_vals, val_mid, '--s', 'Color', color_cp1, 'LineWidth', 1.5, 'MarkerSize', 5);
+    % plot(N_vals, val_hig, '--^', 'Color', color_cp1, 'LineWidth', 1.5, 'MarkerSize', 5);
+    % fill([N_vals, fliplr(N_vals)], [val_hig, fliplr(val_low)], ...
+    % color_cp1, 'FaceAlpha', 0.3, 'EdgeColor', 'none', 'HandleVisibility', 'off');
 
     % Labeling and Title
     xlabel('Moving Window N');
     ylabel(ylabelStr);
     title(titleStr);
-    legend({'Passive (Low)','Passive (Mid)','Passive (High)'...
-        'Active (Low) 1x $U_a$','Active (Mid) 1x $U_a$','Active (High) 1x $U_a$',...
-        'Active (Low) 0.5x $U_a$','Active (Mid) 0.5x $U_a$','Active (High) 0.5x $U_a$'}, ...
-        'Location', 'best', 'NumColumns', 3, 'Interpreter', 'latex');
+    % legend({'Passive (low)','Passive (mid)','Passive (hig)'...
+    %     'Active (low) $U$','Active (mid) $U$','Active (hig) $U$',...
+    %     'Active (low) 0.5x $U$','Active (mid) 0.5x $U$','Active (hig) 0.5x $U$'}, ...
+    %     'Location', 'northeast', 'NumColumns', 2, 'Interpreter', 'latex', FontSize=28);
+    legend({'Passive (low)','Passive (mid)','Passive (hig)'...
+        'Active (low) $U$','Active (mid) $U$','Active (hig) $U$'}, ...
+        'Location', 'northwest', 'NumColumns', 2, 'Interpreter', 'latex', FontSize=30);
     grid on;
     hold off;
 end

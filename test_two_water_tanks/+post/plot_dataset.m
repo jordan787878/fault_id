@@ -7,12 +7,16 @@ post.setPublicationDefaults
     %                   'data/dataset2', or 'data/dataset3'
     
     % Plot for 'fail_percent'
-    figure(1);
-    plot_dataset_modular(datasetFolder, 'fail_percent', 'Fail Percentage %', 'Fail Percentage vs Moving Window & (Noise Level)');
+    % figure(1);
+    % plot_dataset_modular(datasetFolder, 'fail_percent', 'Fail Percentage %', 'Fail Percentage vs Moving Window & (Noise Level)');
     
     % Plot for 'success_id_time_for_known_fault'
     figure(2);
-    plot_dataset_modular(datasetFolder, 'success_id_time_for_known_fault', 'Average ID Time Duration', 'Average ID Time vs Moving Window & (Noise Level)');
+    plot_dataset_modular(datasetFolder, 'success_id_time_for_known_fault', 'Average ID Time', 'ID Time vs Moving Window & (Noise Level)');
+    set(gcf, 'PaperUnits', 'inches');
+    set(gcf, 'PaperPosition', [0 0 11 9]);  % Adjust dimensions as needed.
+    set(gcf, 'PaperSize', [11 9]);         % Match this to PaperPosition.
+    print(gcf, 'figs/dataset3b_idtime.pdf', '-dpdf', '-r300');
 end
 
 function plot_dataset_modular(datasetFolder, valueField, ylabelStr, titleStr)
@@ -154,8 +158,8 @@ function plot_dataset_modular(datasetFolder, valueField, ylabelStr, titleStr)
     ylabel(ylabelStr);
     title(titleStr);
     legend({...
-        'Active (Noise Low)','Active (Noise Mid)','Active (Noise High)',...
-        'Passive (Noise Low)','Passive (Noise Mid)','Passive (Noise High)'}, 'Location', 'northeast');
+        'Active (low)','Active (mid)','Active (hig)',...
+        'Passive (low)','Passive (mid)','Passive (hig)'}, 'Location', 'northwest', FontSize=28);
     grid on;
     hold off;
 end

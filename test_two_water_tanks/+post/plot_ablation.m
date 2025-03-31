@@ -1,10 +1,10 @@
 function plot_ablation()
     post.setPublicationDefaults
     figure(1);
-    plot_dataset_modular('fail_percent', 'Fail Percentage %', 'Fail Percentage vs Moving Window (Noise Level)');
+    plot_dataset_modular('fail_percent', 'Fail Rate %', 'Fail Rate vs Moving Window (Noise Level)');
     set(gcf, 'PaperUnits', 'inches');
-    set(gcf, 'PaperPosition', [0 0 11 8]);  % Adjust dimensions as needed.
-    set(gcf, 'PaperSize', [11 8]);         % Match this to PaperPosition.
+    set(gcf, 'PaperPosition', [0 0 11 9]);  % Adjust dimensions as needed.
+    set(gcf, 'PaperSize', [11 9]);         % Match this to PaperPosition.
     print(gcf, 'figs/dataset3b_failpercent_ab.pdf', '-dpdf', '-r300');
 end
 
@@ -135,7 +135,7 @@ function plot_dataset_modular(valueField, ylabelStr, titleStr)
         'Active (hig)','Active (mid)','Active (low)', ...
         'w/o Renorm (hig)', 'w/o Renorm (mid)', 'w/o Renorm (low)', ...
         'w/o Renorm & Reject (hig)', 'w/o Renorm & Reject (mid)', 'w/o Renorm & Reject (low)'}, ...
-        'Location', 'northeast', 'NumColumns', 2, 'FontSize',24);
+        'Location', 'northeast', 'NumColumns', 2, 'FontSize',26);
     grid on;
     hold off;
 end
