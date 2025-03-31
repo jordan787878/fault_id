@@ -9,6 +9,10 @@ This system has 12 states: the 3D cartesian position and velocity, the three-coo
 
 A quick 3D animation comparing trajectories using AFID and PFID
 
+https://github.com/user-attachments/assets/946f1e49-5ce0-4736-a11c-9232a9eda813
+
+
+
 ## Two-water Tank Experiment
 
 This system has two states: the water level of the first and two tanks. The control input (a scalar) is the inflow to the first tank. The fault hypotheses are defined by three leak rates: C1L is the leak from the first tank to outside; C12 is the leak from the first tank to the second tank; and C2L is the leak from the second tank to outside. See the previous update document for a detailed description of this system. The measurement consists of water levels of both tanks. For this simulation, we consider 5 possible fault hypotheses: 0 denotes the nominal, 1~4 denotes four distinct faults, and -1 denotes an unknown fault that has not been modeled.
